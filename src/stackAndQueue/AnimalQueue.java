@@ -2,6 +2,8 @@ package stackAndQueue;
 
 import java.util.LinkedList;
 
+
+//wrap the two lists
 public class AnimalQueue {
 	private LinkedList<Dog> dogList = new LinkedList<Dog>();
 	private LinkedList<Cat> catList = new LinkedList<Cat>();
@@ -70,8 +72,7 @@ public class AnimalQueue {
 	}
 }
 
-
-//wrap the two queues
+//an abstract class to be extended by Dog and Cat
 abstract class Animal {
 	private String name;
 	private int order;
