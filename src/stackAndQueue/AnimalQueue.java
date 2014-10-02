@@ -70,6 +70,8 @@ public class AnimalQueue {
 	}
 }
 
+
+//wrap the two queues
 abstract class Animal {
 	private String name;
 	private int order;
