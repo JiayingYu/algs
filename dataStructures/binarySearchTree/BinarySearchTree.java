@@ -131,13 +131,55 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
 
 	@Override
 	public int reset(int orderType) {
-		// TODO Auto-generated method stub
-		return 0;
+		int numNodes = size();
+		if (orderType == INORDER) {
+			inOrderQueue = new LinkedUnbndQueue<T>();
+			inOrder(root);
+		} else if (orderType == PREORDER) {
+			preOrderQueue = new LinkedUnbndQueue<T>();
+			preOrder(root);
+		} else if (orderType == POSTORDER) {
+			postOrderQueue = new LinkedUnbndQueue<T>();
+			postOrder(root);
+		}
+		return numNodes;
+	}
+	
+
+	private void postOrder(BSTNode<T> tree) {
+		if (tree != null) {
+			postOrder(tree.getLeft());
+			postOrder(tree.getRight());
+			postOrderQueue.enqueue(tree.getInfo());
+		}
+	}
+
+	private void preOrder(BSTNode<T> tree) {
+		if(tree != null) {
+			preOrderQueue.enqueue(tree.getInfo());
+			preOrder(tree.getLeft());
+			preOrder(tree.getRight());
+		}
+	}
+
+	private void inOrder(BSTNode<T> tree) {
+		if (tree != null) {
+			inOrder(tree.getLeft());
+			inOrderQueue.enqueue(tree.getInfo());
+			inOrder(tree.getRight());
+		}
 	}
 
 	@Override
 	public T getNext(int orderType) {
-		// TODO Auto-generated method stub
-		return null;
+		if (orderType == INORDER) {
+			return inOrderQueue.dequeue();
+		} else if (orderType == PREORDER) {
+			return preOrderQueue.dequeue();
+		} else if (orderType == POSTORDER) {
+			return postOrderQueue.dequeue();
+		} else 
+			return null;
 	}
+	
 }
