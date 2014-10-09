@@ -1,4 +1,4 @@
-package treesAndGraphs;
+package binarySearchTree;
 
 public interface BSTInterface<T extends Comparable<T>>{
 	static final int INORDER = 1;
