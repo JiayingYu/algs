@@ -1,5 +1,7 @@
 package binarySearchTree;
 
+import java.util.ArrayList;
+
 import queues.LinkedUnbndQueue;
 
 public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T>{
@@ -180,6 +182,31 @@ public class BinarySearchTree<T extends Comparable<T>> implements BSTInterface<T
 			return postOrderQueue.dequeue();
 		} else 
 			return null;
+	}
+	
+	public BinarySearchTree<T> balance() {
+		int size = reset(INORDER);
+		ArrayList<T> treeArray = new ArrayList<T>(size);
+		for (int index = 0; index < size; index++) {
+			treeArray.add(getNext(INORDER));
+		}
+		return insertTree(0, treeArray.size()-1, treeArray);
+	}
+	
+	private BinarySearchTree<T> insertTree(int high, int low, ArrayList<T> array) {
+		BinarySearchTree<T> balancedTree = new BinarySearchTree<T>();
+		if(high == low) {
+			balancedTree.add(array.get(high));
+		} else if (high - 1 == low) {
+			balancedTree.add(array.get(high));
+			balancedTree.add(array.get(low));
+		} else {
+			int mid = (high + low) / 2;
+			balancedTree.add(array.get(mid));
+			insertTree(low, mid-1, array);
+			insertTree(mid+1, high, array);
+		}
+		return balancedTree;
 	}
 	
 }
