@@ -13,6 +13,7 @@ public class Graph {
 		vertexList = new Vertex[MAX_VERTS];
 		adjMat = new int[MAX_VERTS][MAX_VERTS];
 		nVerts = 0;
+		stack = new Stack<Integer>();
 		for (int i = 0; i < MAX_VERTS; i++) {
 			for (int j = 0; j < MAX_VERTS; j++)
 			adjMat[i][j] = 0;
@@ -61,5 +62,23 @@ public class Graph {
 			}
 		}
 		return -1;
+	}
+	
+	public static void main(String[] args) {
+		Graph graph = new Graph();
+		graph.addVertex('A');  // 0
+		graph.addVertex('B');  // 1
+		graph.addVertex('C');  // 2
+		graph.addVertex('D');  // 3
+		graph.addVertex('E');  // 4
+
+		graph.addEdge(0, 1); //AB
+		graph.addEdge(1, 2); //BC
+		graph.addEdge(0, 3); //AD
+		graph.addEdge(3, 4); //DE
+
+		System.out.print("Visits: \n");
+		graph.dfs();
+		System.out.println();
 	}
 }
