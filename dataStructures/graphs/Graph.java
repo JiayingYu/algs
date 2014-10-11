@@ -1,5 +1,6 @@
 package graphs;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class Graph {
@@ -7,7 +8,8 @@ public class Graph {
 	private Vertex[] vertexList;
 	private int[][] adjMat;
 	private int nVerts; //current number of vertices
-	private Stack<Integer> stack; //for depth first search
+	private Stack<Integer> stack; //used depth first search
+	private LinkedList<Integer> queue = new LinkedList<Integer>(); //used bread first search
 	
 	public Graph() {
 		vertexList = new Vertex[MAX_VERTS];
@@ -49,10 +51,25 @@ public class Graph {
 				displayVertex(v);
 			}
 		}
+		resetVertList();
+	}
+	
+	public void bfs() {
+		vertexList[0].wasVisited = true;
+		displayVertex(0);
+		queue.add(0);
 		
-		for (int i = 0; i < nVerts; i++) {
-			vertexList[i].wasVisited = false;
+		while(!queue.isEmpty()) {
+			int curVert = queue.poll(); // remove the vertex at head
+			
+			int adjVert; // next adjacent vertex to the current vertex
+			while((adjVert = getAdjUnvisitedVertex(curVert)) != -1) {
+				vertexList[adjVert].wasVisited = true;
+				queue.add(adjVert);
+				displayVertex(adjVert);
+			}
 		}
+		resetVertList();
 	}
 	
 	private int getAdjUnvisitedVertex(int v) {
@@ -62,6 +79,12 @@ public class Graph {
 			}
 		}
 		return -1;
+	}
+	
+	private void resetVertList() {
+		for (int i = 0; i < nVerts; i++) {
+			vertexList[i].wasVisited = false;
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -77,8 +100,15 @@ public class Graph {
 		graph.addEdge(0, 3); //AD
 		graph.addEdge(3, 4); //DE
 
-		System.out.print("Visits: \n");
+		//test dfs
+		System.out.print("Depth first search: \n");
 		graph.dfs();
 		System.out.println();
+		
+		//test bfs
+		System.out.print("Breadth first search: \n");
+		graph.bfs();
+		System.out.println();
 	}
+	
 }
