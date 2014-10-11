@@ -5,14 +5,14 @@ import java.util.Stack;
 
 public class Graph {
 	private final int MAX_VERTS = 20;
-	private Vertex[] vertexList;
+	private Vertex[] vertList;
 	private int[][] adjMat;
 	private int nVerts; //current number of vertices
 	private Stack<Integer> stack; //used depth first search
 	private LinkedList<Integer> queue = new LinkedList<Integer>(); //used bread first search
 	
 	public Graph() {
-		vertexList = new Vertex[MAX_VERTS];
+		vertList = new Vertex[MAX_VERTS];
 		adjMat = new int[MAX_VERTS][MAX_VERTS];
 		nVerts = 0;
 		stack = new Stack<Integer>();
@@ -23,7 +23,7 @@ public class Graph {
 	}
 	
 	public void addVertex(char label) {
-		vertexList[nVerts] = new Vertex(label);
+		vertList[nVerts] = new Vertex(label);
 		++nVerts;
 	}
 	
@@ -33,11 +33,11 @@ public class Graph {
 	}
 	
 	public void displayVertex(int v) {
-		System.out.println(vertexList[v].label);
+		System.out.print(vertList[v].label);
 	}
 	
 	public void dfs() {
-		vertexList[0].wasVisited = true;
+		vertList[0].wasVisited = true;
 		displayVertex(0);
 		stack.push(0);
 		
@@ -46,7 +46,7 @@ public class Graph {
 			if (v == -1) { // if not exists a adjacent vertex, pop the current vertex
 				stack.pop();
 			} else {
-				vertexList[v].wasVisited = true;
+				vertList[v].wasVisited = true;
 				stack.push(v);
 				displayVertex(v);
 			}
@@ -55,7 +55,7 @@ public class Graph {
 	}
 	
 	public void bfs() {
-		vertexList[0].wasVisited = true;
+		vertList[0].wasVisited = true;
 		displayVertex(0);
 		queue.add(0);
 		
@@ -64,7 +64,7 @@ public class Graph {
 			
 			int adjVert; // next adjacent vertex to the current vertex
 			while((adjVert = getAdjUnvisitedVertex(curVert)) != -1) {
-				vertexList[adjVert].wasVisited = true;
+				vertList[adjVert].wasVisited = true;
 				queue.add(adjVert);
 				displayVertex(adjVert);
 			}
@@ -74,7 +74,7 @@ public class Graph {
 	
 	private int getAdjUnvisitedVertex(int v) {
 		for (int j = 0; j < nVerts; j++) {
-			if (adjMat[v][j] == 1 && vertexList[j].wasVisited == false) {
+			if (adjMat[v][j] == 1 && vertList[j].wasVisited == false) {
 				return j; //if found, return the index of the adjacent vertex
 			}
 		}
@@ -83,32 +83,27 @@ public class Graph {
 	
 	private void resetVertList() {
 		for (int i = 0; i < nVerts; i++) {
-			vertexList[i].wasVisited = false;
+			vertList[i].wasVisited = false;
 		}
 	}
 	
-	public static void main(String[] args) {
-		Graph graph = new Graph();
-		graph.addVertex('A');  // 0
-		graph.addVertex('B');  // 1
-		graph.addVertex('C');  // 2
-		graph.addVertex('D');  // 3
-		graph.addVertex('E');  // 4
-
-		graph.addEdge(0, 1); //AB
-		graph.addEdge(1, 2); //BC
-		graph.addEdge(0, 3); //AD
-		graph.addEdge(3, 4); //DE
-
-		//test dfs
-		System.out.print("Depth first search: \n");
-		graph.dfs();
-		System.out.println();
+	public void minSpanTree() {
+		vertList[0].wasVisited = true;
+		stack.push(0);
 		
-		//test bfs
-		System.out.print("Breadth first search: \n");
-		graph.bfs();
-		System.out.println();
+		while (!stack.isEmpty()) {
+			int curV = stack.peek();
+			int nextV = getAdjUnvisitedVertex(curV);
+			if (nextV == -1) {
+				stack.pop();
+			} else {
+				vertList[nextV].wasVisited = true;
+				stack.push(nextV);
+				displayVertex(curV); //display edge
+				displayVertex(nextV);
+				System.out.println();
+			}
+		}
+		resetVertList();
 	}
-	
 }
