@@ -9,17 +9,22 @@ public class Graph {
 	private int[][] adjMat;
 	private int nVerts; //current number of vertices
 	private Stack<Integer> stack; //used depth first search
-	private LinkedList<Integer> queue = new LinkedList<Integer>(); //used bread first search
+	private LinkedList<Integer> queue; //used bread first search
+	private char[] sortedArray; //used in topological sorting
 	
 	public Graph() {
 		vertList = new Vertex[MAX_VERTS];
 		adjMat = new int[MAX_VERTS][MAX_VERTS];
 		nVerts = 0;
+		queue = new LinkedList<Integer>();
 		stack = new Stack<Integer>();
+		
 		for (int i = 0; i < MAX_VERTS; i++) {
 			for (int j = 0; j < MAX_VERTS; j++)
 			adjMat[i][j] = 0;
 		}
+		
+		sortedArray = new char[MAX_VERTS]; //sorted vert labels
 	}
 	
 	public void addVertex(char label) {
@@ -105,5 +110,71 @@ public class Graph {
 			}
 		}
 		resetVertList();
+	}
+	
+	public void topSort() {
+		int orignNVert = nVerts;
+		while(nVerts > 0) {
+			int curV = noSuccessors(); 
+			
+			if (curV == -1) { //must be a circle
+				System.out.print("Error: Graph has a circile");
+				return;				
+			} 
+			
+			sortedArray[nVerts - 1] = vertList[curV].label;
+			deleteVert(curV);
+		}
+		
+		System.out.println("Topologically sorted order: ");
+		for (int i = 0; i < orignNVert; i++) {
+			System.out.print(sortedArray[i]);
+		}
+		System.out.println();
+	}
+	
+	private int noSuccessors() {
+		boolean findScs;
+		for (int r = 0; r < nVerts; r++) {
+			findScs = false;
+			for (int c = 0; c < nVerts; c++) {
+				if (adjMat[r][c] == 1) {
+					findScs = true;
+					break;
+				}
+			}
+			if (!findScs) {
+			return r;
+			}
+		}
+		return -1;
+	}
+	
+	private void deleteVert(int v) {
+		if (v != nVerts -1) { // if not last vertex
+			for (int j = v; j < nVerts - 1; j++) {
+				vertList[j] = vertList[j + 1]; //delete vertex from the vertex list
+			}
+			
+			for (int r = v; r < nVerts-1; r++) {
+				moveRowUp(r, nVerts);
+			}
+			
+			for (int c = v; c < nVerts-1; c++) {
+				moveColLeft(c, nVerts);
+			}
+		}
+	}
+	
+	private void moveRowUp(int r, int length) {
+		for (int c = 0; c < length; c++) {
+			adjMat[r][c] = adjMat[r + 1][c];
+		}
+	}
+	
+	private void moveColLeft(int c, int length) {
+		for (int r = 0; r < length; r++) {
+			adjMat[r][c] = adjMat[r][c + 1];
+		}
 	}
 }
