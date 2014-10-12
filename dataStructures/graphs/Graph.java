@@ -37,6 +37,10 @@ public class Graph {
 		adjMat[end][start] = 1;
 	}
 	
+	public void addDirectedEdge(int start, int end) {
+		adjMat[start][end] = 1;
+	}
+	
 	public void displayVertex(int v) {
 		System.out.print(vertList[v].label);
 	}
@@ -164,6 +168,7 @@ public class Graph {
 				moveColLeft(c, nVerts);
 			}
 		}
+		nVerts--;
 	}
 	
 	private void moveRowUp(int r, int length) {
