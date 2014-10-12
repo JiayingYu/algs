@@ -2,33 +2,46 @@ package graphs;
 
 public class GraphTest {
 	public static void main(String[] args) {
-//		Graph graph = new Graph();
-//		graph.addVertex('A');  // 0
-//		graph.addVertex('B');  // 1
-//		graph.addVertex('C');  // 2
-//		graph.addVertex('D');  // 3
-//		graph.addVertex('E');  // 4
-//
-//		graph.addEdge(0, 1); //AB
-//		graph.addEdge(1, 2); //BC
-//		graph.addEdge(0, 3); //AD
-//		graph.addEdge(3, 4); //DE
-//
-//		//test dfs
-//		System.out.print("Depth first search: \n");
-//		graph.dfs();
-//		System.out.println();
-//		
-//		//test bfs
-//		System.out.print("Breadth first search: \n");
-//		graph.bfs();
-//		System.out.println();
-//		
-//		//test mst
-//		testMst();
-		
-		//test topSort
+		testBfs();
+		testDfs();
+		testMst();
 		testTopSort();
+	}
+	
+	private static void testDfs() {
+		Graph graph = new Graph();
+		graph.addVertex('A');  // 0
+		graph.addVertex('B');  // 1
+		graph.addVertex('C');  // 2
+		graph.addVertex('D');  // 3
+		graph.addVertex('E');  // 4
+
+		graph.addEdge(0, 1); //AB
+		graph.addEdge(1, 2); //BC
+		graph.addEdge(0, 3); //AD
+		graph.addEdge(3, 4); //DE
+
+		System.out.print("Depth first search: \n");
+		graph.dfs();
+		System.out.println();
+	}
+	
+	private static void testBfs() {
+		Graph graph = new Graph();
+		graph.addVertex('A');  // 0
+		graph.addVertex('B');  // 1
+		graph.addVertex('C');  // 2
+		graph.addVertex('D');  // 3
+		graph.addVertex('E');  // 4
+
+		graph.addEdge(0, 1); //AB
+		graph.addEdge(1, 2); //BC
+		graph.addEdge(0, 3); //AD
+		graph.addEdge(3, 4); //DE
+		
+		System.out.print("Breadth first search: \n");
+		graph.bfs();
+		System.out.println();
 	}
 	
 	//test miminum spanning tree
@@ -53,7 +66,6 @@ public class GraphTest {
 
 		System.out.println("Minimun spanning tree: ");
 		graph.minSpanTree();
-		System.out.println("\n");
 	}
 	
 	private static void testTopSort() {

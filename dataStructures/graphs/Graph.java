@@ -16,15 +16,11 @@ public class Graph {
 		vertList = new Vertex[MAX_VERTS];
 		adjMat = new int[MAX_VERTS][MAX_VERTS];
 		nVerts = 0;
-		queue = new LinkedList<Integer>();
-		stack = new Stack<Integer>();
-		
+				
 		for (int i = 0; i < MAX_VERTS; i++) {
 			for (int j = 0; j < MAX_VERTS; j++)
 			adjMat[i][j] = 0;
 		}
-		
-		sortedArray = new char[MAX_VERTS]; //sorted vert labels
 	}
 	
 	public void addVertex(char label) {
@@ -46,6 +42,7 @@ public class Graph {
 	}
 	
 	public void dfs() {
+		stack = new Stack<Integer>();
 		vertList[0].wasVisited = true;
 		displayVertex(0);
 		stack.push(0);
@@ -64,6 +61,7 @@ public class Graph {
 	}
 	
 	public void bfs() {
+		queue = new LinkedList<Integer>();
 		vertList[0].wasVisited = true;
 		displayVertex(0);
 		queue.add(0);
@@ -97,6 +95,7 @@ public class Graph {
 	}
 	
 	public void minSpanTree() {
+		stack = new Stack<Integer>();
 		vertList[0].wasVisited = true;
 		stack.push(0);
 		
@@ -117,6 +116,7 @@ public class Graph {
 	}
 	
 	public void topSort() {
+		sortedArray = new char[nVerts]; //sorted vert labels
 		int orignNVert = nVerts;
 		while(nVerts > 0) {
 			int curV = noSuccessors(); 
