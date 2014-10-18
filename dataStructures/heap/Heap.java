@@ -30,10 +30,11 @@ public class Heap{
       Node bottom = heapArray[index];
       int parent = (index - 1) / 2;
       
-      while (index > 0 && heapArray[parent].getKey() < heapArray[index].getKey()) {
+      while (index > 0 && 
+      			heapArray[parent].getKey() < bottom.getKey()) {
           heapArray[index] = heapArray[parent];
           index = parent;
-          parent = (index - 1) / 2;
+          parent = (parent - 1) / 2;
       }
       
       heapArray[index] = bottom;
@@ -67,6 +68,7 @@ public class Heap{
   		heapArray[index] = heapArray[largerChild];
   		index = largerChild;
   	}
+  	heapArray[index] = top;
   }
   
   public boolean change(int index, int newValue) {
@@ -87,39 +89,38 @@ public class Heap{
   	System.out.print("heapArray: ");
   	for (int m = 0; m < curSize; m++) {
   		if (heapArray[m] != null) 
-  			System.out.print(heapArray[m].getKey() + "");
+  			System.out.print(heapArray[m].getKey() + " ");
   		else
   			System.out.println("--");
   	}
   	System.out.println();
   	
-  	int nBlanks = 32;
-  	int itemsPerRow = 1;
-  	int column = 0;
-  	int j = 0;
-  	String dots = "..................................";
-  	System.out.println(dots+dots);
-  	
-  	while(curSize > 0) {
-  		if (column == 0) {
-  			for (int k = 0; k < nBlanks; k++)
-  				System.out.print(" ");
-  		}
-  		System.out.print(heapArray[j].getKey());
-  		if(++j == curSize)
-  			break;
-  		
-  		if(++column == itemsPerRow) {
-  			nBlanks /= 2;
-  			itemsPerRow *= 2;
-  			column = 0;
-  			System.out.println();
-  		} else {
-  			for (int k = 0; k < nBlanks * 2 - 2; k++) 
-  				System.out.print(" ");
-  		}
-  		System.out.println("\n" + dots + dots);
-  	}
-  		
+//  	int nBlanks = 32;
+//  	int itemsPerRow = 1;
+//  	int column = 0;
+//  	int j = 0;
+//  	String dots = "..................................";
+//  	System.out.println(dots+dots);
+//  	
+//  	while(curSize > 0) {
+//  		if (column == 0) {
+//  			for (int k = 0; k < nBlanks; k++)
+//  				System.out.print(" ");
+//  		}
+//  		System.out.print(heapArray[j].getKey());
+//  		if(++j == curSize)
+//  			break;
+//  		
+//  		if(++column == itemsPerRow) {
+//  			nBlanks /= 2;
+//  			itemsPerRow *= 2;
+//  			column = 0;
+//  			System.out.println();
+//  		} else {
+//  			for (int k = 0; k < nBlanks * 2 - 2; k++) 
+//  				System.out.print(" ");
+//  		}
+//  		System.out.println("\n" + dots + dots);
+//  	}
   }
 }
