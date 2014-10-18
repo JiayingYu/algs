@@ -2,8 +2,12 @@ package heap;
 
 public class HeapTest {
 	public static void main(String[] args) {
-		Heap heap = new Heap(31);		
-		
+		testHeap();
+	}
+
+	public static void testHeap() {
+		Heap heap = new Heap(31);
+
 		heap.insert(70);
 		heap.insert(40);
 		heap.insert(50);
@@ -16,13 +20,13 @@ public class HeapTest {
 		heap.insert(90);
 
 		heap.displayHeap();
-		
+
 		heap.insert(53);
 		heap.displayHeap();
-		
+
 		heap.remove();
 		heap.displayHeap();
-		
+
 		heap.remove();
 		heap.displayHeap();
 	}

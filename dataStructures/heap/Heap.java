@@ -11,6 +11,16 @@ public class Heap{
 		heapArray = new Node[maxSize];
 	}
 	
+	public Heap(int maxSize, int[] array) {
+		this.maxSize = maxSize;
+		curSize = array.length;
+		heapArray = new Node[maxSize];
+		for (int i = 0; i < array.length; i++) {
+			heapArray[i] = new Node(array[i]);
+		}
+	}
+	
+	
 	public boolean isEmpty() {
 		return curSize == 0;
 	}
@@ -26,7 +36,7 @@ public class Heap{
       return true;
   }
   
-  private void trickleUp(int index) {
+  public void trickleUp(int index) {
       Node bottom = heapArray[index];
       int parent = (index - 1) / 2;
       
@@ -48,7 +58,7 @@ public class Heap{
   	return root;
   }
   
-  private void trickleDown(int index) {
+  public void trickleDown(int index) {
   	Node top = heapArray[index];
   	int largerChild;
   	
@@ -122,5 +132,10 @@ public class Heap{
 //  		}
 //  		System.out.println("\n" + dots + dots);
 //  	}
+  }
+  
+  void insertAt(int index, int key) {
+  	Node newNode = new Node(key);
+  	heapArray[index] = newNode;
   }
 }
