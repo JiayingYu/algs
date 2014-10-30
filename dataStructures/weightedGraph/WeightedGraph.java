@@ -6,9 +6,7 @@ public class WeightedGraph {
 	private Vertex[] vertList;
 	private int[][] adjMat;
 	private int nVerts;
-	private int currentVert;
 	private PriorityQ edgePQ;
-	private int nInTree; //number of verts in tree
 	
 	public WeightedGraph() {
 		vertList = new Vertex[MAX_VERTS];
@@ -28,6 +26,7 @@ public class WeightedGraph {
 	
 	public void addEdge(int start, int end, int weight) {
 		adjMat[start][end] = weight;
+		adjMat[end][start] = weight;
 	}
 	
 	public void displayVertex(int v) {
@@ -36,12 +35,13 @@ public class WeightedGraph {
 	
 	//minimum spanning tree of weighted graph
 	public void mstw() {
-		currentVert = 0;
+		int nInTree = 0; //number of verts in tree
+		int currentVert = 0;
 		
 		//insert edges adjacent to currentVert into PQ
 		while(nInTree < nVerts - 1) {
 			vertList[currentVert].isInTree = true;
-			nInTree = 0;
+			nInTree++;
 			
 			for (int end = 0; end < nVerts; end ++) {
 				if (end == currentVert)
@@ -53,7 +53,7 @@ public class WeightedGraph {
 				if (distance == INFINITY)
 					continue;
 				
-				putInPQ(end, distance);
+				putInPQ(currentVert, end, distance);
 			}
 			
 			if(edgePQ.size() == 0) {
@@ -74,9 +74,18 @@ public class WeightedGraph {
 		}
 	}
 	
-	private void putInPQ(int newVert, int newDist) {
-		
+	private void putInPQ(int start, int end, int newDist) {
+		int oldEgDexInPQ =  edgePQ.find(end);
+		if (oldEgDexInPQ != -1) {
+			Edge oldEdge = edgePQ.peekN(oldEgDexInPQ);
+			if (oldEdge.distance > newDist) {
+				edgePQ.removeN(oldEgDexInPQ);
+				Edge newEdge = new Edge(start, end, newDist);
+				edgePQ.insert(newEdge);
+			}
+		} else {
+			Edge newEdge = new Edge(start, end, newDist);
+			edgePQ.insert(newEdge);
+		}
 	}
-	
-	
 }

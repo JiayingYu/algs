@@ -12,15 +12,18 @@ public class PriorityQ{
 	
 	public void insert(Edge edge) {
 		int j;
-		for (j=0; j <size; j++) {
-			if (edge.distance >= queue[j].distance) break;
-			
-			for(int k = size-1; k >= j; k--)
-				queue[k + 1] = queue[k];
-			
-			queue[j] = edge;
-			size++;
+		for (j = 0; j < size; j++) {
+			if (edge.distance >= queue[j].distance) 
+				break;
 		}
+			
+		for(int k = size-1; k >= j; k--) {
+				queue[k + 1] = queue[k];
+		}
+		
+		queue[j] = edge;
+		size++;
+		
 	}
 	
 	public Edge removeMin() {
