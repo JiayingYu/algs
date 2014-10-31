@@ -1,16 +1,14 @@
 package dijkstra;
 
-public class Graph {
+public class GraphDijkstra {
 	private final int MAXVERT = 20;
 	private final int INFINITY = Integer.MAX_VALUE;
 	private Vertex[] vertList;
 	private int[][] adjMat;
 	private int nVerts;
-	private int nTree;
 	private DistParent[] shstPath;
-//	private int startToCurrent;
 	
-	public Graph() {
+	public GraphDijkstra() {
 		vertList = new Vertex[MAXVERT];
 		adjMat = new int[MAXVERT][MAXVERT];
 		for (int j = 0; j < MAXVERT; j++) {
@@ -19,12 +17,10 @@ public class Graph {
 			}
 		}
 		nVerts = 0;
-		nTree = 0;
 		shstPath = new DistParent[MAXVERT];
 	}
 	
-	public void addVert(String label) {
-		
+	public void addVertex(String label) {
 		vertList[nVerts] = new Vertex(label);
 		nVerts++;
 	}
@@ -34,8 +30,9 @@ public class Graph {
 		adjMat[start][end] = dist;
 	}
 	
-	public void shortestPath(int start) {
+	public void shortestPath() {
 		int startTree = 0;
+		int nTree = 0;
 		vertList[startTree].isInTree = true;
 		nTree = 1;
 		for(int j = 0; j < nVerts; j++) {
