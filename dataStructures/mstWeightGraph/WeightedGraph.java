@@ -1,4 +1,4 @@
-package weightedGraph;
+package mstWeightGraph;
 
 public class WeightedGraph {
 	private final int MAX_VERTS = 20;

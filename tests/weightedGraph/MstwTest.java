@@ -1,5 +1,7 @@
 package weightedGraph;
 
+import mstWeightGraph.WeightedGraph;
+
 public class MstwTest {
 	public static void main(String[] args) {
 		WeightedGraph graph = new WeightedGraph();

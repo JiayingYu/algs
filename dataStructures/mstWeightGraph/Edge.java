@@ -1,4 +1,4 @@
-package weightedGraph;
+package mstWeightGraph;
 
 class Edge {
 	int srcVert; //index of a vertex starting edge

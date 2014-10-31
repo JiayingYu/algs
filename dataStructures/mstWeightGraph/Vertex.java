@@ -1,4 +1,4 @@
-package weightedGraph;
+package mstWeightGraph;
 
 public class Vertex {
 	char label;
